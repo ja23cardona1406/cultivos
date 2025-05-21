@@ -10,7 +10,7 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@supabase/supabase-js": "^2.39.8",
+    "@supabase/supabase-js": "^2.49.8",
     "agro-diversificacion": "file:",
     "chart.js": "^4.4.2",
     "lucide-react": "^0.344.0",
