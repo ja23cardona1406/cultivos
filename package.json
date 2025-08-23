@@ -1,0 +1,17 @@
+{
+  "name": "agro-diversificacion",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "eslint .",
+    "preview": "vite preview",
+    "dev:server": "node server.js",
+    "dev:full": "concurrently \"npm run dev\" \"npm run dev:server\""
+  },
+  "dependencies": {
+    "@tensorflow/tfjs": "^4.22.0"
+  }
+}
