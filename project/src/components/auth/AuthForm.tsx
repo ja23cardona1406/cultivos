@@ -15,7 +15,6 @@ const AuthForm: React.FC = () => {
   
   const { signIn, signUp, user, session, loading: authLoading } = useAuth();
   
-  // Si el usuario ya está autenticado, no mostrar el formulario
   if (authLoading) {
     return (
       <div className="min-h-screen flex items-center justify-center bg-green-50">
@@ -44,7 +43,9 @@ const AuthForm: React.FC = () => {
             </p>
           </div>
           <Button 
-            onClick={() => window.location.href = '/dashboard'} // O la ruta que uses
+            onClick={() => {
+              window.location.href = '/dashboard'; // O la ruta que uses
+            }}
             fullWidth
           >
             Ir al Dashboard
@@ -56,18 +57,13 @@ const AuthForm: React.FC = () => {
   
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
-    // Prevenir múltiples submits
     if (loading) return;
     
     setError(null);
     setSuccess(null);
     setLoading(true);
     
-    console.log('Form submitted:', { isLogin, email, password: '***' }); // Debug log
-    
     try {
-      // Validación básica
       if (!email || !password) {
         throw new Error('Por favor complete todos los campos');
       }
@@ -79,13 +75,8 @@ const AuthForm: React.FC = () => {
       const { data, error: authError } = isLogin 
         ? await signIn(email, password)
         : await signUp(email, password);
-      
-      console.log('Auth result:', { data, authError }); // Debug log
         
       if (authError) {
-        console.error('Auth error details:', authError);
-        
-        // Manejo mejorado de errores específicos de Supabase
         let errorMessage = 'Ocurrió un error. Por favor intente de nuevo.';
         
         if (authError.message.includes('Invalid login credentials')) {
@@ -105,21 +96,16 @@ const AuthForm: React.FC = () => {
         throw new Error(errorMessage);
       }
       
-      // Manejo exitoso
       if (isLogin && data) {
         setSuccess('¡Inicio de sesión exitoso!');
-        // El AuthContext ya manejará la redirección automáticamente
-        // No hacer nada más aquí, el componente se renderizará de nuevo
       } else if (!isLogin) {
-        // Para registro exitoso
         setSuccess('Cuenta creada exitosamente. Verifica tu correo electrónico para confirmar tu cuenta.');
-        setIsLogin(true); // Cambiar a modo login después del registro
+        setIsLogin(true);
         setEmail('');
         setPassword('');
       }
       
     } catch (err) {
-      console.error('Handle submit error:', err);
       setError(
         err instanceof Error 
           ? err.message 
@@ -183,13 +169,13 @@ const AuthForm: React.FC = () => {
             label="Contraseña" 
             name="password" 
             required
-            helpText={!isLogin ? "La contraseña debe tener al menos 6 caracteres" : undefined}
+            helpText={!isLogin ? 'La contraseña debe tener al menos 6 caracteres' : undefined}
           >
             <input
               id="password"
               name="password"
               type="password"
-              autoComplete={isLogin ? "current-password" : "new-password"}
+              autoComplete={isLogin ? 'current-password' : 'new-password'}
               required
               value={password}
               onChange={(e) => setPassword(e.target.value)}

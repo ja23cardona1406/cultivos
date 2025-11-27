@@ -5,6 +5,7 @@ interface ButtonProps extends ButtonHTMLAttributes<HTMLButtonElement> {
   variant?: 'primary' | 'secondary' | 'danger' | 'outline';
   size?: 'sm' | 'md' | 'lg';
   loading?: boolean;
+  fullWidth?: boolean; // 👈 añadida
 }
 
 const Button: React.FC<ButtonProps> = ({
@@ -14,15 +15,21 @@ const Button: React.FC<ButtonProps> = ({
   size = 'md',
   loading = false,
   disabled,
+  fullWidth = false,
   ...props
 }) => {
-  const baseClasses = 'inline-flex items-center justify-center font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 ease-in-out';
+  const baseClasses =
+    'inline-flex items-center justify-center font-medium rounded-lg focus:outline-none focus:ring-2 focus:ring-offset-2 transition-all duration-200 ease-in-out';
   
   const variantClasses = {
-    primary: 'bg-green-600 hover:bg-green-700 text-white border border-transparent focus:ring-green-500 shadow-sm hover:shadow-md',
-    secondary: 'bg-gray-600 hover:bg-gray-700 text-white border border-transparent focus:ring-gray-500 shadow-sm hover:shadow-md',
-    danger: 'bg-red-600 hover:bg-red-700 text-white border border-transparent focus:ring-red-500 shadow-sm hover:shadow-md',
-    outline: 'bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 focus:ring-green-500 shadow-sm hover:shadow-md'
+    primary:
+      'bg-green-600 hover:bg-green-700 text-white border border-transparent focus:ring-green-500 shadow-sm hover:shadow-md',
+    secondary:
+      'bg-gray-600 hover:bg-gray-700 text-white border border-transparent focus:ring-gray-500 shadow-sm hover:shadow-md',
+    danger:
+      'bg-red-600 hover:bg-red-700 text-white border border-transparent focus:ring-red-500 shadow-sm hover:shadow-md',
+    outline:
+      'bg-white hover:bg-gray-50 text-gray-700 border border-gray-300 focus:ring-green-500 shadow-sm hover:shadow-md',
   };
   
   const sizeClasses = {
@@ -32,15 +39,22 @@ const Button: React.FC<ButtonProps> = ({
   };
   
   const isDisabled = disabled || loading;
-  const disabledClasses = isDisabled ? 'opacity-50 cursor-not-allowed hover:bg-current hover:shadow-current' : '';
+  const disabledClasses = isDisabled
+    ? 'opacity-50 cursor-not-allowed hover:bg-current hover:shadow-current'
+    : '';
   
+  const widthClass = fullWidth ? 'w-full' : '';
+
   const classes = `
     ${baseClasses}
     ${variantClasses[variant]}
     ${sizeClasses[size]}
     ${disabledClasses}
+    ${widthClass}
     ${className}
-  `.trim().replace(/\s+/g, ' ');
+  `
+    .trim()
+    .replace(/\s+/g, ' ');
 
   return (
     <button

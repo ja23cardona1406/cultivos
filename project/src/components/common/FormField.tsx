@@ -7,6 +7,7 @@ interface FormFieldProps {
   children: React.ReactNode;
   required?: boolean;
   tooltip?: string;
+  helpText?: string; // 👈 añadida
 }
 
 const FormField: React.FC<FormFieldProps> = ({
@@ -15,7 +16,8 @@ const FormField: React.FC<FormFieldProps> = ({
   error,
   children,
   required = false,
-  tooltip
+  tooltip,
+  helpText,
 }) => {
   return (
     <div className="mb-4">
@@ -38,8 +40,14 @@ const FormField: React.FC<FormFieldProps> = ({
           </div>
         )}
       </div>
+
       {children}
-      {error && <p className="mt-1 text-sm text-red-600">{error}</p>}
+
+      {error ? (
+        <p className="mt-1 text-sm text-red-600">{error}</p>
+      ) : helpText ? (
+        <p className="mt-1 text-xs text-gray-500">{helpText}</p>
+      ) : null}
     </div>
   );
 };
