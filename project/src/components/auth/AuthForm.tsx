@@ -44,7 +44,7 @@ const AuthForm: React.FC = () => {
           </div>
           <Button 
             onClick={() => {
-              window.location.href = '/dashboard'; // O la ruta que uses
+              window.location.hash = '#/dashboard'; // O la ruta que uses
             }}
             fullWidth
           >
